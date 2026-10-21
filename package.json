@@ -27,10 +27,10 @@
     "recharts": "^3.10.1",
     "tailwind-merge": "^3.7.0",
     "xlsx": "^0.18.5",
-    "zod": "^4.6.5"
+    "zod": "^4.6.5",
+    "@tailwindcss/turbopack": "^4.3.3"
   },
   "devDependencies": {
-    "@tailwindcss/turbopack": "^4.3.3",
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
     "tailwindcss": "^4"
