@@ -36,6 +36,7 @@ export default async function LoginPage({ searchParams }) {
         alt=""
         aria-hidden="true"
         className="pointer-events-none fixed inset-0 h-full w-full object-cover"
+        suppressHydrationWarning
       />
       <div
         className="pointer-events-none fixed inset-0 bg-gradient-to-r from-[#080d18]/90 via-[#080d18]/70 to-[#080d18]/40"
