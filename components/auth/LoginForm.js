@@ -57,7 +57,7 @@ export default function LoginForm({ accounts, from }) {
 
   return (
     <>
-      <div className="anim-fade-up rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_24px_60px_-40px_rgba(16,31,53,0.5)] sm:p-8">
+      <div className="anim-fade-up rounded-2xl border border-white/10 bg-white/90 p-6 shadow-[0_40px_80px_-60px_rgba(15,23,42,0.9)] backdrop-blur-xl sm:p-8">
         <header>
           <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-navy-500">
             Secure sign in
@@ -149,7 +149,7 @@ export default function LoginForm({ accounts, from }) {
               type="checkbox"
               checked={remember}
               onChange={(event) => setRemember(event.target.checked)}
-              className="h-4 w-4 rounded border-slate-300 accent-[#244674]"
+              className="h-4 w-4 rounded border-slate-300 bg-white accent-[#244674]"
             />
             Keep me signed in on this device
           </label>
@@ -184,7 +184,7 @@ export default function LoginForm({ accounts, from }) {
           </Button>
         </form>
 
-        <div className="mt-6 rounded-lg border border-dashed border-slate-300 bg-slate-50/70 p-4">
+        <div className="mt-6 rounded-lg border border-dashed border-slate-300/80 bg-white/70 p-4 backdrop-blur">
           <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">
             Demo access
           </p>
