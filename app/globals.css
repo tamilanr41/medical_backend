@@ -1,0 +1,436 @@
+@import "tailwindcss";
+
+/* Class-based dark mode: `dark` on <html> toggles the dark theme. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+@theme {
+  /* Zhanx palette aligned to the ERP "clinical" theme.
+     `brand` is the primary blue; `navy` is an alias so existing screens
+     reskin in one place. `ink` is the neutral ramp; `mint` is success. */
+  --color-brand-50: #eef7ff;
+  --color-brand-100: #d9edff;
+  --color-brand-200: #bce0ff;
+  --color-brand-300: #8eccff;
+  --color-brand-400: #59afff;
+  --color-brand-500: #338eff;
+  --color-brand-600: #1d6ff5;
+  --color-brand-700: #155ae1;
+  --color-brand-800: #1749b6;
+  --color-brand-900: #19408f;
+  --color-brand-950: #142a57;
+
+  --color-navy-50: #eef7ff;
+  --color-navy-100: #d9edff;
+  --color-navy-200: #bce0ff;
+  --color-navy-300: #8eccff;
+  --color-navy-400: #59afff;
+  --color-navy-500: #338eff;
+  --color-navy-600: #1d6ff5;
+  --color-navy-700: #155ae1;
+  --color-navy-800: #1749b6;
+  --color-navy-900: #19408f;
+  --color-navy-950: #142a57;
+
+  --color-ink-50: #f6f7f9;
+  --color-ink-100: #eceef2;
+  --color-ink-200: #d5d9e1;
+  --color-ink-300: #b1b8c6;
+  --color-ink-400: #8793a6;
+  --color-ink-500: #68748a;
+  --color-ink-600: #525c72;
+  --color-ink-700: #444c5e;
+  --color-ink-800: #2c3240;
+  --color-ink-900: #232836;
+  --color-ink-950: #12141d;
+
+  --color-mint-50: #effaf5;
+  --color-mint-100: #d8f2e6;
+  --color-mint-200: #b4e4d1;
+  --color-mint-300: #83cfaf;
+  --color-mint-400: #4fb189;
+  --color-mint-500: #2d9670;
+  --color-mint-600: #1f7859;
+  --color-mint-700: #185f47;
+  --color-mint-800: #154c3b;
+  --color-mint-900: #123f32;
+
+  /* Semantic surface tokens (theme-aware). */
+  --color-surface: #f6f7f9;
+  --color-panel: #ffffff;
+  --color-panel-muted: #f8fafc;
+  --color-field: #ffffff;
+  --color-line: #d5d9e1;
+
+  /* Re-map Tailwind's indigo/violet ramps onto the brand blue so existing
+     screens that used those accents reskin without per-file edits. */
+  --color-indigo-50: #eef7ff;
+  --color-indigo-100: #d9edff;
+  --color-indigo-200: #bce0ff;
+  --color-indigo-300: #8eccff;
+  --color-indigo-400: #59afff;
+  --color-indigo-500: #338eff;
+  --color-indigo-600: #1d6ff5;
+  --color-indigo-700: #155ae1;
+  --color-indigo-800: #1749b6;
+  --color-indigo-900: #19408f;
+  --color-indigo-950: #142a57;
+
+  --color-violet-50: #eef7ff;
+  --color-violet-100: #d9edff;
+  --color-violet-200: #bce0ff;
+  --color-violet-300: #8eccff;
+  --color-violet-400: #59afff;
+  --color-violet-500: #338eff;
+  --color-violet-600: #1d6ff5;
+  --color-violet-700: #155ae1;
+  --color-violet-800: #1749b6;
+  --color-violet-900: #19408f;
+
+  --radius-xl: 0.75rem;
+
+  --shadow-card: 0 1px 2px 0 rgba(16, 23, 42, 0.06), 0 1px 3px 0 rgba(16, 23, 42, 0.04);
+  --shadow-card-hover: 0 4px 14px -4px rgba(16, 23, 42, 0.12), 0 2px 6px -2px rgba(16, 23, 42, 0.06);
+  --shadow-lift: 0 12px 30px -8px rgba(16, 23, 42, 0.18), 0 4px 10px -4px rgba(16, 23, 42, 0.08);
+}
+
+/* ------------------------------------------------------------------ */
+/* Theme: light (default) + dark                                       */
+/* ------------------------------------------------------------------ */
+
+:root {
+  color-scheme: light;
+}
+
+/* In dark mode the neutral ramp is inverted (ink-50 ↔ ink-950) so existing
+   `text-ink-*`, `border-ink-*` and `bg-ink-*` utilities adapt automatically.
+   Accent *-50/-100/-200 (subtle backgrounds) and *-700 (foregrounds) are
+   darkened/lightened for accessible contrast on dark surfaces. */
+html.dark {
+  color-scheme: dark;
+
+  /* ERP "clinical" console palette — mirrors D:\TAMILAN\ERP\client\src\theme-clinical.css
+     void #05080f · bg #070b14 · surface #0c1322 · elevated #111a2b · line #1c2942 */
+  --color-surface: #070b14;
+  --color-panel: #0c1322;
+  --color-panel-muted: #111a2b;
+  --color-field: #070b14;
+  --color-line: #1c2942;
+
+  --color-ink-50: #070b14;
+  --color-ink-100: #111a2b;
+  --color-ink-200: #1c2942;
+  --color-ink-300: #2a3a56;
+  --color-ink-400: #74839e;
+  --color-ink-500: #94a3bd;
+  --color-ink-600: #aab8d0;
+  --color-ink-700: #cbd6e8;
+  --color-ink-800: #e8eefb;
+  --color-ink-900: #eef3fc;
+  --color-ink-950: #f4f8ff;
+
+  --color-brand-50: #10203a;
+  --color-brand-100: #16294a;
+  --color-brand-200: #1f3a63;
+  --color-brand-300: #4f7fbe;
+
+  --color-navy-50: #16294a;
+  --color-navy-100: #1f3a63;
+  --color-navy-200: #2a4a7a;
+  --color-navy-300: #6ea3ff;
+  --color-navy-400: #7fb0ff;
+  --color-navy-500: #6288c8;
+  --color-navy-600: #7fb0ff;
+  --color-navy-700: #93bfff;
+  --color-navy-800: #b4d2ff;
+  --color-navy-900: #d3e4ff;
+
+  --color-blue-50: #10203a;
+  --color-blue-100: #16294a;
+  --color-blue-200: #1f3a63;
+  --color-blue-700: #8fbdff;
+  --color-blue-800: #a9cfff;
+  --color-blue-900: #c3dbff;
+
+  --color-purple-50: #241a3a;
+  --color-purple-100: #2e2148;
+  --color-purple-200: #3d2c5e;
+  --color-purple-700: #c4a9ff;
+  --color-purple-800: #d3bcff;
+  --color-purple-900: #e0d0ff;
+
+  --color-cyan-50: #0d2530;
+  --color-cyan-100: #12303d;
+  --color-cyan-200: #17414f;
+  --color-cyan-700: #7fd6ec;
+  --color-cyan-800: #9fe0f0;
+  --color-cyan-900: #b8e8f5;
+
+  --color-fuchsia-50: #2a1633;
+  --color-fuchsia-100: #371d42;
+
+  --color-slate-50: #070b14;
+  --color-slate-100: #111a2b;
+  --color-slate-200: #1c2942;
+  --color-slate-300: #2a3a56;
+  --color-slate-400: #74839e;
+  --color-slate-500: #94a3bd;
+  --color-slate-600: #aab8d0;
+  --color-slate-700: #cbd6e8;
+  --color-slate-800: #e8eefb;
+  --color-slate-900: #eef3fc;
+
+  --color-rose-50: #2b1622;
+  --color-rose-100: #3a1c2c;
+  --color-rose-200: #4f2639;
+  --color-rose-700: #f4a3b6;
+  --color-rose-800: #f7b8c6;
+  --color-rose-900: #fac9d4;
+
+  --color-amber-50: #2b2010;
+  --color-amber-100: #3a2b14;
+  --color-amber-200: #4f3a1c;
+  --color-amber-700: #f0c777;
+  --color-amber-800: #f2d38f;
+  --color-amber-900: #f5dfa8;
+
+  --color-emerald-50: #10241d;
+  --color-emerald-100: #143026;
+  --color-emerald-200: #1c4133;
+  --color-emerald-700: #6fd6a3;
+  --color-emerald-800: #8fe0b6;
+  --color-emerald-900: #a9e8c6;
+
+  --color-mint-50: #10241d;
+  --color-mint-100: #143026;
+  --color-mint-200: #1c4133;
+  --color-mint-400: #4fb189;
+}
+
+body {
+  background-color: var(--color-surface);
+  color: var(--color-ink-800);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(29, 111, 245, 0.28);
+  color: #142a57;
+}
+
+html.dark ::selection {
+  background: rgba(37, 99, 235, 0.32);
+  color: #e8eefb;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(29, 111, 245, 0.5);
+  border-radius: 6px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Motion                                                              */
+/* ------------------------------------------------------------------ */
+
+@keyframes hms-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hms-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hms-drawer-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes hms-drawer-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes hms-pop {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes hms-progress {
+  0% {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+  60% {
+    transform: scaleX(0.75);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}
+
+@keyframes hms-shine {
+  0% {
+    left: -35%;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    left: 135%;
+    opacity: 0;
+  }
+}
+
+.anim-fade-up {
+  animation: hms-fade-up 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.anim-fade-in {
+  animation: hms-fade-in 200ms ease-out both;
+}
+
+.anim-drawer {
+  animation: hms-drawer-in 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.anim-drawer-right {
+  animation: hms-drawer-in-right 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.anim-pop {
+  animation: hms-pop 170ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.anim-progress {
+  transform-origin: left center;
+  animation: hms-progress 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.anim-shine {
+  animation: hms-shine 4.5s ease-in-out 1.2s infinite;
+}
+
+/* ------------------------------------------------------------------ */
+/* Utilities                                                           */
+/* ------------------------------------------------------------------ */
+
+.brand-gradient {
+  background-image: linear-gradient(135deg, #338eff 0%, #1d6ff5 55%, #155ae1 100%);
+}
+
+.brand-text-gradient {
+  background-image: linear-gradient(120deg, #1d6ff5, #155ae1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+html.dark .brand-text-gradient {
+  background-image: linear-gradient(120deg, #8fbdff, #5a8fd6);
+}
+
+.card-surface {
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-line);
+  background-color: var(--color-panel);
+  box-shadow: var(--shadow-card);
+}
+
+/* Smooth, non-flickering theme transition. */
+.theme-transition,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease,
+    fill 200ms ease,
+    stroke 200ms ease !important;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 80;
+}
+
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  border-radius: 0.5rem;
+  background: var(--color-panel);
+  padding: 0.6rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-brand-700);
+  box-shadow:
+    0 10px 30px -12px rgba(16, 23, 42, 0.35),
+    0 0 0 1px var(--color-line);
+}
+
+.scrollbar-slim {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-ink-300) transparent;
+}
+
+.scrollbar-slim::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scrollbar-slim::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background-color: var(--color-ink-300);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

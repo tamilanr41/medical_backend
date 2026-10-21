@@ -1,0 +1,505 @@
+/**
+ * Centralised HMS menu configuration (§21 MASTER PROMPT).
+ *
+ * Every module, category and menu item of the legacy HMS is declared here
+ * with an exact route. The sidebar, breadcrumbs, menu search, role-based
+ * visibility, favourites and every screen are generated from this file —
+ * never hardcode menu entries anywhere else.
+ *
+ * Route shape:
+ *   module landing   /{module.slug}
+ *   category index   /{module.slug}/{category.slug}
+ *   menu screen      /{module.slug}/{category.slug}/{item.slug}
+ *
+ * Item ids are derived deterministically in lib/menu-utils.js as
+ * `{module.id}.{category.slug}.{item.slug}` so favourites, recents and
+ * permissions stay stable.
+ *
+ * screen.type: "crud" | "form" | "list" | "report"
+ * screen.collection: Mongo collection powering the screen (see config/entities.js)
+ */
+
+/** Item helper: title appears verbatim in the UI (legacy names preserved). */
+const it = (slug, title, type, collection) => ({
+  slug,
+  title,
+  screen: { type, collection },
+});
+
+/** Category helper. */
+const cat = (slug, title, items = []) => ({ slug, title, items });
+
+export const MENU = [
+  /* ---------------------------------------------------------------- 1 */
+  {
+    id: 101,
+    slug: "opd",
+    title: "Out Patient",
+    icon: "Hospital",
+    description: "OP registration, consultation billing, prescriptions and patient history.",
+    categories: [
+      cat("transaction", "Transaction", [
+        it("registration", "Registration", "form", "op_registrations"),
+        it("billing", "OP Billing", "form", "op_bills"),
+        it("prescription", "Prescription", "form", "prescriptions"),
+        it("patient-history", "Patient History", "list", "op_visits"),
+      ]),
+      cat("report", "Report"),
+      cat("master", "Master"),
+      cat("setup", "Setup"),
+    ],
+  },
+
+  /* ---------------------------------------------------------------- 2 */
+  {
+    id: 102,
+    slug: "ipd",
+    title: "In Patient",
+    icon: "BedDouble",
+    description: "IP admissions, stay management, discharge transactions and reports.",
+    categories: [
+      cat("transaction", "Transaction", [
+        it("admission", "IP Admission", "form", "admissions"),
+      ]),
+      cat("report", "Report"),
+      cat("setup", "Setup"),
+    ],
+  },
+
+  /* ---------------------------------------------------------------- 3 */
+  {
+    id: 103,
+    slug: "laboratory",
+    title: "Laboratory",
+    icon: "FlaskConical",
+    description: "Lab front office, observations, results, external labs, purchases and reports.",
+    categories: [
+      cat("frontoffice", "FrontOffice", [
+        it(
+          "patient-checkin-register-lab",
+          "Patient Checkin Register Lab",
+          "list",
+          "lab_checkins"
+        ),
+      ]),
+      cat("lab", "Lab", [
+        it("observation", "Observation", "form", "lab_observations"),
+        it("observation-list", "Observation List", "list", "lab_observations"),
+        it(
+          "lab-test-sent-to-external-organization",
+          "Lab Test Sent To External Organization",
+          "form",
+          "lab_external_tests"
+        ),
+        it(
+          "lab-test-sent-to-external-org-edit-amount",
+          "Lab Test Sent To External Org Edit Amount",
+          "form",
+          "lab_external_amounts"
+        ),
+        it("lab-result-entry", "Lab Result Entry", "form", "lab_results"),
+      ]),
+      cat("purchase", "Purchase"),
+      cat("report", "Report"),
+      cat("master", "Master"),
+      cat("setup", "Setup"),
+    ],
+  },
+
+  /* ---------------------------------------------------------------- 4 */
+  {
+    id: 104,
+    slug: "xray",
+    title: "X-Ray",
+    icon: "Radiation",
+    description: "X-Ray transactions and modality setup.",
+    categories: [cat("transaction", "Transaction"), cat("setup", "Setup")],
+  },
+
+  /* ---------------------------------------------------------------- 5 */
+  {
+    id: 105,
+    slug: "scan",
+    title: "Scan",
+    icon: "Scan",
+    description: "Scan transactions, templates and modality setup.",
+    categories: [
+      cat("transaction", "Transaction"),
+      cat("setup", "Setup", [
+        it("scan-template", "Scan Template", "crud", "scan_templates"),
+        it("scan-template-list", "Scan Template List", "list", "scan_templates"),
+      ]),
+    ],
+  },
+
+  /* ---------------------------------------------------------------- 6 */
+  {
+    id: 106,
+    slug: "specialty-tests",
+    title: "Specialty Tests",
+    icon: "TestTube",
+    description: "Specialty diagnostic tests and setup.",
+    categories: [cat("transaction", "Transaction"), cat("setup", "Setup")],
+  },
+
+  /* ---------------------------------------------------------------- 7 */
+  {
+    id: 107,
+    slug: "physiotherapy",
+    title: "Physiotherapy",
+    icon: "PersonStanding",
+    description: "Physiotherapy sessions, plans and setup.",
+    categories: [cat("transaction", "Transaction"), cat("setup", "Setup")],
+  },
+
+  /* ---------------------------------------------------------------- 8 */
+  {
+    id: 108,
+    slug: "dialysis",
+    title: "Dialysis",
+    icon: "Droplets",
+    description: "Dialysis sessions, masters, reports and setup.",
+    categories: [
+      cat("transaction", "Transaction", [
+        it("dialysis-transaction", "Dialysis Transaction", "form", "dialysis_sessions"),
+      ]),
+      cat("report", "Report"),
+      cat("setup", "Setup", [
+        it("dialysis-master", "Dialysis Master", "crud", "dialysis_masters"),
+      ]),
+    ],
+  },
+
+  /* ---------------------------------------------------------------- 9 */
+  {
+    id: 109,
+    slug: "ward",
+    title: "Ward",
+    icon: "Bed",
+    description: "Ward operations including room cleaning and setup.",
+    categories: [
+      cat("transaction", "Transaction", [
+        it("room-cleaning", "Room Cleaning", "form", "room_cleanings"),
+      ]),
+      cat("setup", "Setup"),
+    ],
+  },
+
+  /* --------------------------------------------------------------- 10 */
+  {
+    id: 110,
+    slug: "mrd",
+    title: "MRD",
+    icon: "FolderOpen",
+    description: "Medical Records Department — file movement, case sheets, masters and coding.",
+    categories: [
+      cat("transaction", "Transaction", [
+        it("file-movement", "File Movement", "form", "file_movements"),
+        it("file-movement-list", "File Movement List", "list", "file_movements"),
+        it("case-sheet", "Case Sheet", "form", "case_sheets"),
+        it("patient-records", "Patient Records", "list", "patient_records"),
+      ]),
+      cat("report", "Report"),
+      cat("master", "Master", [
+        it("file-master", "File Master", "crud", "mrd_file_masters"),
+        it("file-master-list", "File Master List", "list", "mrd_file_masters"),
+        it("complaint-type", "Complaint Type", "crud", "complaint_types"),
+        it("complaint-type-list", "Complaint Type List", "list", "complaint_types"),
+        it("patient-complaint", "Patient Complaint", "crud", "patient_complaints"),
+        it("patient-complaint-list", "Patient Complaint List", "list", "patient_complaints"),
+      ]),
+      cat("setup", "Setup", [
+        it("file-type", "File Type", "crud", "file_types"),
+        it("file-type-list", "File Type List", "list", "file_types"),
+        it("icd-coding", "ICD Coding", "crud", "icd_codings"),
+        it("icd-coding-list", "ICD Coding List", "list", "icd_codings"),
+        it("icpm-coding", "ICPM Coding", "crud", "icpm_codings"),
+        it("icpm-coding-list", "ICPM Coding List", "list", "icpm_codings"),
+      ]),
+    ],
+  },
+
+  /* --------------------------------------------------------------- 11 */
+  {
+    id: 111,
+    slug: "op-theatre",
+    title: "Operation Theatre",
+    icon: "Syringe",
+    description: "OT schedules, cases, masters, reports and setup.",
+    categories: [
+      cat("transaction", "Transaction"),
+      cat("master", "Master"),
+      cat("reports", "Reports", [
+        it("excel-export", "Excel Export", "report", "ot_cases"),
+      ]),
+      cat("setup", "Setup"),
+    ],
+  },
+
+  /* --------------------------------------------------------------- 12 */
+  {
+    id: 127,
+    slug: "cssd",
+    title: "CSSD",
+    icon: "Package",
+    description: "Central Sterile Supply — instrument processing, masters and setup.",
+    categories: [
+      cat("transaction", "Transaction"),
+      cat("master", "Master"),
+      cat("setup", "Setup"),
+    ],
+  },
+
+  /* --------------------------------------------------------------- 13 */
+  {
+    id: 112,
+    slug: "insurance",
+    title: "Insurance",
+    icon: "ShieldCheck",
+    description: "Insurance claims, pre-authorisations, masters and reports.",
+    categories: [
+      cat("transaction", "Transaction"),
+      cat("reports", "Reports"),
+      cat("master", "Master"),
+      cat("setup", "Setup"),
+    ],
+  },
+
+  /* --------------------------------------------------------------- 14 */
+  {
+    id: 113,
+    slug: "pharmacy",
+    title: "Pharmacy",
+    icon: "Pill",
+    description: "Enterprise pharmacy — sales, purchase, inventory, finance, reports and masters.",
+    categories: [
+      cat("sales", "Sales", [
+        it("sales-invoice", "Sales Invoice", "form", "pharmacy_sales"),
+        it("prescription-based-sales", "Prescription-based Sales", "form", "pharmacy_rx_sales"),
+        it("patient-billing", "Patient Billing", "form", "pharmacy_patient_bills"),
+        it("returns", "Returns", "form", "pharmacy_returns"),
+        it("discounts", "Discounts", "crud", "discounts"),
+        it("payment-modes", "Payment Modes", "crud", "payment_modes"),
+      ]),
+      cat("purchase", "Purchase", [
+        it("purchase-invoice", "Purchase Invoice", "form", "purchase_invoices"),
+        it("purchase-return", "Purchase Return", "form", "purchase_returns"),
+        it("purchase-history", "Purchase History", "list", "purchase_invoices"),
+      ]),
+      cat("inventory", "Inventory", [
+        it("stock", "Stock", "list", "stock"),
+        it("stock-adjustment", "Stock Adjustment", "form", "stock_adjustments"),
+        it("stock-transfer", "Stock Transfer", "form", "stock_transfers"),
+        it("item-balance", "Item Balance", "list", "item_balances"),
+        it("batch", "Batch", "crud", "batches"),
+        it("expiry", "Expiry", "list", "batches"),
+        it("stock-reports", "Stock Reports", "report", "stock"),
+      ]),
+      cat("finance", "Finance", [
+        it("payment", "Payment", "form", "pharmacy_payments"),
+        it("collection", "Collection", "list", "pharmacy_collections"),
+        it("outstanding", "Outstanding", "list", "pharmacy_outstanding"),
+      ]),
+      cat("reports", "Reports", [
+        it("sales-reports", "Sales Reports", "report", "pharmacy_sales"),
+        it("purchase-reports", "Purchase Reports", "report", "purchase_invoices"),
+        it("reports-stock", "Stock Reports", "report", "stock"),
+        it("expiry-reports", "Expiry Reports", "report", "batches"),
+        it("collection-reports", "Collection Reports", "report", "pharmacy_payments"),
+      ]),
+      cat("master", "Master", [
+        it("medicine", "Medicine", "crud", "medicines"),
+        it("manufacturer", "Manufacturer", "crud", "manufacturers"),
+        it("supplier", "Supplier", "crud", "suppliers"),
+        it("generic", "Generic", "crud", "generics"),
+        it("category", "Category", "crud", "item_categories"),
+        it("unit", "Unit", "crud", "units"),
+        it("tax", "Tax", "crud", "taxes"),
+      ]),
+      cat("setup", "Setup"),
+    ],
+  },
+
+  /* --------------------------------------------------------------- 15 */
+  {
+    id: 114,
+    slug: "optical",
+    title: "Optical",
+    icon: "Glasses",
+    description: "Optical store — sales, purchase, inventory, finance, customers and masters.",
+    categories: [
+      cat("sales", "Sales", [
+        it("sales-invoice", "Sales Invoice", "form", "optical_sales"),
+      ]),
+      cat("purchase", "Purchase"),
+      cat("inventory", "Inventory"),
+      cat("finance", "Finance"),
+      cat("master", "Master", [
+        it("customer", "Customer", "crud", "optical_customers"),
+        it("manufacturer", "Manufacturer", "crud", "optical_manufacturers"),
+      ]),
+      cat("setup", "Setup"),
+    ],
+  },
+
+  /* --------------------------------------------------------------- 16 */
+  {
+    id: 115,
+    slug: "transport",
+    title: "Transport",
+    icon: "Ambulance",
+    description: "Patient transport — trips, vehicles, masters and setup.",
+    categories: [
+      cat("transaction", "Transaction"),
+      cat("master", "Master"),
+      cat("setup", "Setup"),
+    ],
+  },
+
+  /* --------------------------------------------------------------- 17 */
+  {
+    id: 116,
+    slug: "housekeeping",
+    title: "House Keeping",
+    icon: "SprayCan",
+    description: "Housekeeping transactions — cleaning, rounds and requests.",
+    categories: [cat("transaction", "Transaction")],
+  },
+
+  /* --------------------------------------------------------------- 18 */
+  {
+    id: 117,
+    slug: "blood-bank",
+    title: "Blood Bank",
+    icon: "Droplet",
+    description: "Blood bank — issues, storage, masters and setup.",
+    categories: [
+      cat("transaction", "Transaction"),
+      cat("master", "Master"),
+      cat("setup", "Setup"),
+    ],
+  },
+
+  /* --------------------------------------------------------------- 19 */
+  {
+    id: 118,
+    slug: "diet",
+    title: "Diet",
+    icon: "UtensilsCrossed",
+    description: "Diet orders, charts, reports and masters.",
+    categories: [cat("transaction", "Transaction"), cat("reports", "Reports"), cat("master", "Master")],
+  },
+
+  /* --------------------------------------------------------------- 20 */
+  {
+    id: 120,
+    slug: "hrm",
+    title: "HRM",
+    icon: "Users",
+    description: "Human resources — employees, holidays, enterprises, reports and setup.",
+    categories: [
+      cat("transaction", "Transaction", [
+        it("employee-transaction", "Employee Transaction", "form", "employee_transactions"),
+      ]),
+      cat("report", "Report", [
+        it("hr-reports", "HR Reports", "report", "employees"),
+      ]),
+      cat("master", "Master", [
+        it("enterprise", "Enterprise", "crud", "enterprises"),
+        it("holiday-type", "Holiday Type", "crud", "holiday_types"),
+        it("add-holidaytype", "Add HolidayType", "form", "holidays"),
+      ]),
+      cat("setup", "Setup"),
+    ],
+  },
+
+  /* --------------------------------------------------------------- 21 */
+  {
+    id: 121,
+    slug: "purchase",
+    title: "Purchase",
+    icon: "ShoppingCart",
+    description: "Procurement — purchase transactions, inventory, reports and masters.",
+    categories: [
+      cat("purchase", "Purchase", [
+        it("purchase-transaction", "Purchase Transaction", "form", "purchase_transactions"),
+      ]),
+      cat("inventory", "Inventory", [
+        it("update-item-balance", "Update Item Balance", "form", "item_balance_updates"),
+      ]),
+      cat("reports", "Reports"),
+      cat("master", "Master"),
+      cat("setup", "Setup"),
+    ],
+  },
+
+  /* --------------------------------------------------------------- 22 */
+  {
+    id: 122,
+    slug: "assets",
+    title: "Asset",
+    icon: "Boxes",
+    description: "Asset register — movements, depreciation reports and masters.",
+    categories: [
+      cat("transaction", "Transaction"),
+      cat("reports", "Reports"),
+      cat("master", "Master"),
+    ],
+  },
+
+  /* --------------------------------------------------------------- 23 */
+  {
+    id: 123,
+    slug: "finance",
+    title: "Finance",
+    icon: "Landmark",
+    description: "Accounting — general ledger, receivables, payables, processes, reports and masters.",
+    categories: [
+      cat("general", "General"),
+      cat("receivable", "Receivable"),
+      cat("payable", "Payable"),
+      cat("process", "Process"),
+      cat("reports", "Reports"),
+      cat("master", "Master"),
+      cat("setup", "Setup"),
+    ],
+  },
+
+  /* --------------------------------------------------------------- 24 */
+  {
+    id: 124,
+    slug: "admin",
+    title: "Admin",
+    icon: "Shield",
+    description: "Security, users, roles, permissions, audit trail, tools and reports.",
+    categories: [
+      cat("security", "Security", [
+        it("users", "Users", "crud", "users"),
+        it("roles", "Roles", "crud", "roles"),
+        it("permissions", "Permissions", "list", "permissions"),
+        it("module-access", "Module Access", "list", "module_access"),
+        it("menu-access", "Menu Access", "list", "menu_access"),
+        it("audit-logs", "Audit Logs", "list", "audit_logs"),
+      ]),
+      cat("tools", "Tools", [
+        it("system-configuration", "System Configuration", "crud", "system_configs"),
+        it("backup", "Backup", "list", "backups"),
+      ]),
+      cat("reports", "Reports"),
+    ],
+  },
+];
+
+/** Collections only administrators may touch (API + UI guard). */
+export const ADMIN_ONLY_COLLECTIONS = new Set([
+  "users",
+  "roles",
+  "permissions",
+  "module_access",
+  "menu_access",
+  "audit_logs",
+  "system_configs",
+  "backups",
+]);
+
+export const MENU_BY_SLUG = new Map(MENU.map((module) => [module.slug, module]));

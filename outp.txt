@@ -1,0 +1,21 @@
+  title: "Out Patient",
+    icon: "Hospital",
+    description: "OP registration, consultation billing, prescriptions and patient history.",
+    categories: [
+      cat("transaction", "Transaction", [
+        it("registration", "Registration", "form", "op_registrations"),
+        it("billing", "OP Billing", "form", "op_bills"),
+        it("prescription", "Prescription", "form", "prescriptions"),
+        it("patient-history", "Patient History", "list", "op_visits"),
+      ]),
+      cat("report", "Report"),
+      cat("master", "Master"),
+      cat("setup", "Setup"),
+    ],
+  },
+
+  /* ---------------------------------------------------------------- 2 */
+  {
+    id: 102,
+    slug: "ipd",
+    title: "
