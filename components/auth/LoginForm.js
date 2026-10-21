@@ -80,7 +80,7 @@ export default function LoginForm({ from }) {
             >
               Username
             </label>
-            <div className="flex items-center rounded-[11px] border border-sky-300/25 bg-[#050e1a]/45 transition-colors focus-within:border-sky-400 focus-within:ring-[3px] focus-within:ring-sky-400/20">
+            <div className="flex items-center rounded-[11px] border border-sky-300/40 bg-[#050e1a]/45 transition-colors focus-within:border-sky-400 focus-within:shadow-[0_0_0_3px_rgba(51,182,255,0.22)]">
               <User
                 className="ml-3 h-[17px] w-[17px] shrink-0 text-slate-400"
                 strokeWidth={1.8}
@@ -95,7 +95,7 @@ export default function LoginForm({ from }) {
                 value={username}
                 onChange={(event) => setUsername(event.target.value)}
                 placeholder="Enter your username"
-                className="w-full flex-1 bg-transparent px-2 py-[13px] text-[15px] text-white placeholder:text-slate-500 focus:outline-none"
+                className="w-full flex-1 bg-transparent px-2 py-[13px] text-[15px] text-white placeholder:text-slate-500 focus:outline-none focus-visible:outline-none focus-visible:shadow-none"
               />
             </div>
           </div>
@@ -107,7 +107,7 @@ export default function LoginForm({ from }) {
             >
               Password
             </label>
-            <div className="flex items-center rounded-[11px] border border-sky-300/25 bg-[#050e1a]/45 transition-colors focus-within:border-sky-400 focus-within:ring-[3px] focus-within:ring-sky-400/20">
+            <div className="flex items-center rounded-[11px] border border-sky-300/40 bg-[#050e1a]/45 transition-colors focus-within:border-sky-400 focus-within:shadow-[0_0_0_3px_rgba(51,182,255,0.22)]">
               <Lock
                 className="ml-3 h-[17px] w-[17px] shrink-0 text-slate-400"
                 strokeWidth={1.8}
@@ -122,7 +122,7 @@ export default function LoginForm({ from }) {
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 placeholder="Enter your password"
-                className="w-full flex-1 bg-transparent px-2 py-[13px] text-[15px] text-white placeholder:text-slate-500 focus:outline-none"
+                className="w-full flex-1 bg-transparent px-2 py-[13px] text-[15px] text-white placeholder:text-slate-500 focus:outline-none focus-visible:outline-none focus-visible:shadow-none"
               />
               <button
                 type="button"
