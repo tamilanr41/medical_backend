@@ -25,7 +25,7 @@ const PILLARS = [
 
 export default async function LoginPage({ searchParams }) {
   const accounts = listDemoAccounts();
-  const params = await searchParams;
+  const params = await Promise.resolve(searchParams);
   const from = typeof params?.from === "string" ? params.from : null;
 
   return (
