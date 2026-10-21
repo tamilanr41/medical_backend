@@ -1,14 +1,13 @@
 import Link from "next/link";
 import {
   Activity,
-  FlaskConical,
+  Share2,
   ShieldCheck,
-  Stethoscope,
-  Workflow,
+  TrendingUp,
+  Users,
 } from "lucide-react";
 import LoginForm from "@/components/auth/LoginForm";
 import Logo from "@/components/layout/Logo";
-import { listDemoAccounts } from "@/lib/demo-users";
 import { HOSPITAL } from "@/config/modules";
 
 export const metadata = {
@@ -17,127 +16,133 @@ export const metadata = {
 };
 
 const PILLARS = [
-  { icon: Workflow, title: "Unified launcher", sub: "24 modules" },
-  { icon: Stethoscope, title: "Clinical first", sub: "OPD · IPD · Labs" },
-  { icon: FlaskConical, title: "Diagnostics", sub: "Lab · X-Ray" },
-  { icon: ShieldCheck, title: "Role-based", sub: "Secure access" },
+  { icon: Users, title: "Patient Care", sub: "Better outcomes" },
+  { icon: Share2, title: "Operational Efficiency", sub: "Higher productivity" },
+  { icon: ShieldCheck, title: "Data Security", sub: "Complete privacy" },
+  { icon: TrendingUp, title: "Growth Ready", sub: "Scalable platform" },
+];
+
+const STATS = [
+  { value: "500+", label: "Beds" },
+  { value: "50+", label: "Departments" },
+  { value: "200+", label: "Medical Staff" },
+  { value: "24/7", label: "Care & Support" },
 ];
 
 export default async function LoginPage({ searchParams }) {
-  const accounts = listDemoAccounts();
   const params = await Promise.resolve(searchParams);
   const from = typeof params?.from === "string" ? params.from : null;
 
   return (
-    <main className="relative flex h-screen overflow-hidden bg-[#080d18] text-white">
+    <main className="relative min-h-screen w-full overflow-x-hidden bg-[#050b16] text-white">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/bg_img.png"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none fixed inset-0 h-full w-full object-cover"
+        className="pointer-events-none fixed inset-0 -z-10 h-full w-full object-cover"
         suppressHydrationWarning
       />
       <div
-        className="pointer-events-none fixed inset-0 bg-gradient-to-r from-[#080d18]/90 via-[#080d18]/70 to-[#080d18]/40"
         aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none fixed inset-0"
+        className="pointer-events-none fixed inset-0 -z-10"
         style={{
-          backgroundImage:
-            "radial-gradient(1100px 600px at -10% -10%, rgba(51,142,255,0.28), transparent 60%), radial-gradient(900px 560px at 110% 115%, rgba(21,90,225,0.32), transparent 55%)",
+          background:
+            "radial-gradient(ellipse 90% 60% at 15% 0%, rgba(51,182,255,0.10), transparent 60%)," +
+            "radial-gradient(ellipse 70% 50% at 85% 100%, rgba(51,182,255,0.08), transparent 60%)," +
+            "linear-gradient(100deg, rgba(4,10,20,0.88) 0%, rgba(4,10,20,0.68) 34%, rgba(4,10,20,0.28) 60%, rgba(4,10,20,0.12) 100%)," +
+            "linear-gradient(180deg, rgba(3,8,16,0.55) 0%, rgba(3,8,16,0.08) 22%, rgba(3,8,16,0.08) 70%, rgba(3,8,16,0.78) 100%)",
         }}
-        aria-hidden="true"
       />
 
-      {/* Branding ------------------------------------------------------ */}
-      <section className="relative hidden w-[46%] flex-col justify-between p-10 lg:flex xl:p-12">
-        <div className="relative">
-          <Link href="/login" className="flex items-center gap-3">
-            <Logo className="h-11 w-11" />
-            <span className="leading-tight">
-              <span className="block text-lg font-extrabold tracking-tight text-white">
-                ZHANX{" "}
-                <span className="bg-gradient-to-r from-brand-300 to-brand-400 bg-clip-text text-transparent">
-                  HMS
-                </span>
-              </span>
-              <span className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-300">
-                {HOSPITAL.name}
-              </span>
+      {/* Top bar ------------------------------------------------------- */}
+      <header className="relative z-10 flex items-center justify-between px-6 pt-7 sm:px-10 lg:px-16">
+        <Link href="/login" className="flex items-center gap-3.5">
+          <span className="flex h-11 w-11 items-center justify-center rounded-[13px] bg-gradient-to-br from-sky-300 to-sky-600 shadow-[0_0_22px_rgba(51,182,255,0.45)]">
+            <Activity className="h-5 w-5 text-[#04121f]" strokeWidth={2.4} aria-hidden="true" />
+          </span>
+          <span>
+            <span className="block text-lg font-bold leading-tight tracking-tight">
+              ZhanX <span className="text-sky-300">HospitalOS</span>
             </span>
-          </Link>
+            <span className="block text-[10px] font-medium tracking-[3px] text-slate-400">
+              CLINICAL COMMAND
+            </span>
+          </span>
+        </Link>
+        <div className="hidden items-center gap-3.5 text-sm text-slate-300 sm:flex">
+          <span>Better Systems</span>
+          <span className="h-[3px] w-[3px] rounded-full bg-slate-500" />
+          <span>Healthier Tomorrow</span>
+        </div>
+      </header>
 
-          <div className="mt-16 max-w-md">
-            <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-300">
-              <Activity className="h-3.5 w-3.5" aria-hidden="true" />
-              Hospital Management System
-            </p>
-            <h1 className="mt-4 text-4xl font-bold leading-[1.08] tracking-tight xl:text-5xl">
-              Unified care.
-              <br />
-              <span className="bg-gradient-to-r from-brand-300 to-brand-400 bg-clip-text text-transparent">
-                Smarter operations.
-              </span>
-            </h1>
-            <p className="mt-5 max-w-md text-[15px] leading-relaxed text-white/75">
-              {HOSPITAL.name} brings every ward, department and record under one
-              secure workspace — clinical, diagnostic, administrative and
-              finance modules behind a single sign-in.
-            </p>
-          </div>
+      {/* Main stage ---------------------------------------------------- */}
+      <div className="relative z-10 mx-auto grid max-w-[1360px] grid-cols-1 items-center gap-10 px-6 py-12 sm:px-10 lg:grid-cols-[1.25fr_0.85fr] lg:gap-12 lg:px-16 lg:py-16">
+        <section>
+          <p className="mb-4 text-xs font-semibold tracking-[3px] text-sky-300">
+            HOSPITAL MANAGEMENT SYSTEM
+          </p>
+          <h1 className="max-w-xl text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl">
+            Unified Care.
+            <br />
+            <span className="bg-gradient-to-r from-sky-300 to-sky-400 bg-clip-text text-transparent">
+              Smarter Operations.
+            </span>
+          </h1>
+          <p className="mt-5 max-w-md text-[15px] leading-relaxed text-slate-300">
+            ZhanX HospitalOS brings every ward, department and record under one
+            secure, intelligent platform — built for the pace of real clinical
+            work.
+          </p>
 
-          <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-6">
+          <div className="mt-11 flex flex-wrap gap-8">
             {PILLARS.map((item) => (
-              <li key={item.title} className="flex items-center gap-3">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 ring-1 ring-white/10">
-                  <item.icon className="h-[18px] w-[18px] text-brand-300" aria-hidden="true" />
+              <div key={item.title} className="flex max-w-[160px] items-center gap-3">
+                <span className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-full border border-sky-300/25 bg-sky-400/[0.07]">
+                  <item.icon
+                    className="h-[19px] w-[19px] text-sky-300"
+                    strokeWidth={1.8}
+                    aria-hidden="true"
+                  />
                 </span>
-                <span className="leading-tight">
-                  <span className="block text-[13.5px] font-semibold text-white">
+                <span>
+                  <span className="block text-sm font-bold leading-tight">
                     {item.title}
                   </span>
-                  <span className="block text-[12px] text-white/65">{item.sub}</span>
+                  <span className="mt-0.5 block text-xs text-slate-400">
+                    {item.sub}
+                  </span>
                 </span>
-              </li>
+              </div>
             ))}
-          </ul>
-        </div>
-
-        <div className="relative flex items-center justify-between text-[12px] text-white/55">
-          <span>
-            Version {HOSPITAL.version} · {HOSPITAL.campus}
-          </span>
-          <span>Support {HOSPITAL.supportExtension}</span>
-        </div>
-      </section>
-
-      {/* Form ---------------------------------------------------------- */}
-      <section className="relative flex flex-1 items-center justify-center overflow-y-auto px-4 py-10 [scrollbar-width:none] sm:px-8 [&::-webkit-scrollbar]:hidden">
-        <div className="my-auto w-full max-w-md">
-          <div className="mb-8 flex items-center gap-3 lg:hidden">
-            <Logo className="h-10 w-10" />
-            <div className="leading-tight">
-              <p className="text-[15px] font-bold tracking-wide text-white">
-                ZHANX{" "}
-                <span className="text-brand-300">HMS</span>
-              </p>
-              <p className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-white/65">
-                {HOSPITAL.systemName}
-              </p>
-            </div>
           </div>
 
-          <LoginForm accounts={accounts} from={from} />
+          <div className="mt-9 grid grid-cols-2 divide-y divide-sky-300/20 overflow-hidden rounded-[14px] border border-sky-300/20 bg-white/5 backdrop-blur-xl sm:grid-cols-4 sm:divide-x sm:divide-y-0">
+            {STATS.map((stat) => (
+              <div key={stat.label} className="px-4 py-4">
+                <p className="font-mono text-xl font-bold text-sky-300">{stat.value}</p>
+                <p className="text-[11px] text-slate-400">{stat.label}</p>
+              </div>
+            ))}
+          </div>
 
-          <p className="mt-8 text-center text-[12px] leading-relaxed text-white/55" suppressHydrationWarning>
-            © {new Date().getFullYear()} {HOSPITAL.name} · {HOSPITAL.systemName}
-            <br />
-            Authorized personnel only. All access is logged and audited.
-          </p>
-        </div>
-      </section>
+          <div className="mt-7 flex items-center gap-2.5 text-sm text-slate-400">
+            <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]" />
+            System Online
+          </div>
+        </section>
+
+        <section>
+          <LoginForm from={from} />
+        </section>
+      </div>
+
+      <footer className="relative z-10 px-6 pb-8 text-center text-[12px] leading-relaxed text-slate-500 sm:px-10 lg:px-16" suppressHydrationWarning>
+        © {new Date().getFullYear()} {HOSPITAL.name} · {HOSPITAL.systemName}
+        <br />
+        Authorized personnel only. All access is logged and audited.
+      </footer>
     </main>
   );
 }

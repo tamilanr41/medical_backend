@@ -2,17 +2,26 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { CircleAlert, Eye, EyeOff, KeyRound, Loader2, LogIn, User } from "lucide-react";
-import Button from "@/components/ui/Button";
+import {
+  ArrowRight,
+  CircleAlert,
+  Eye,
+  EyeOff,
+  KeyRound,
+  Loader2,
+  Lock,
+  ShieldCheck,
+  User,
+} from "lucide-react";
 import Dialog from "@/components/ui/Dialog";
 import { HOSPITAL } from "@/config/modules";
 
-export default function LoginForm({ accounts, from }) {
+export default function LoginForm({ from }) {
   const router = useRouter();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(true);
+  const [remember, setRemember] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -57,30 +66,24 @@ export default function LoginForm({ accounts, from }) {
 
   return (
     <>
-      <div className="anim-fade-up rounded-2xl border border-white/10 bg-white/90 p-6 shadow-[0_40px_80px_-60px_rgba(15,23,42,0.9)] backdrop-blur-xl sm:p-8">
-        <header>
-          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-navy-500">
-            Secure sign in
-          </p>
-          <h1 className="mt-1.5 text-2xl font-semibold tracking-tight text-slate-900">
-            Welcome back
-          </h1>
-          <p className="mt-1.5 text-sm text-slate-500">
-            Sign in to open your hospital module launcher.
-          </p>
-        </header>
+      <div className="relative rounded-[20px] border border-sky-300/25 bg-[#0e1c30]/55 p-7 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.6)] backdrop-blur-2xl sm:p-9">
+        <h2 className="text-[28px] font-bold tracking-tight text-white">Welcome Back</h2>
+        <p className="mb-7 mt-2 text-sm text-slate-300">
+          Sign in to your ZhanX HospitalOS account
+        </p>
 
-        <form onSubmit={handleSubmit} className="mt-7 space-y-4" noValidate>
+        <form onSubmit={handleSubmit} className="space-y-[18px]" noValidate>
           <div>
             <label
               htmlFor="username"
-              className="mb-1.5 block text-[13px] font-semibold text-slate-700"
+              className="mb-2 block text-[13px] font-semibold text-slate-300"
             >
               Username
             </label>
-            <div className="relative">
+            <div className="flex items-center rounded-[11px] border border-sky-300/25 bg-[#050e1a]/45 transition-colors focus-within:border-sky-400 focus-within:ring-[3px] focus-within:ring-sky-400/20">
               <User
-                className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+                className="ml-3 h-[17px] w-[17px] shrink-0 text-slate-400"
+                strokeWidth={1.8}
                 aria-hidden="true"
               />
               <input
@@ -91,31 +94,23 @@ export default function LoginForm({ accounts, from }) {
                 required
                 value={username}
                 onChange={(event) => setUsername(event.target.value)}
-                placeholder="e.g. admin"
-                className="h-11 w-full rounded-lg border border-slate-300 bg-white pl-9 pr-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-navy-400 focus:ring-2 focus:ring-navy-100"
+                placeholder="Enter your username"
+                className="w-full flex-1 bg-transparent px-2 py-[13px] text-[15px] text-white placeholder:text-slate-500 focus:outline-none"
               />
             </div>
           </div>
 
           <div>
-            <div className="mb-1.5 flex items-center justify-between">
-              <label
-                htmlFor="password"
-                className="block text-[13px] font-semibold text-slate-700"
-              >
-                Password
-              </label>
-              <button
-                type="button"
-                onClick={() => setForgotOpen(true)}
-                className="text-[12.5px] font-medium text-navy-600 transition hover:text-navy-800 hover:underline"
-              >
-                Forgot password?
-              </button>
-            </div>
-            <div className="relative">
-              <KeyRound
-                className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+            <label
+              htmlFor="password"
+              className="mb-2 block text-[13px] font-semibold text-slate-300"
+            >
+              Password
+            </label>
+            <div className="flex items-center rounded-[11px] border border-sky-300/25 bg-[#050e1a]/45 transition-colors focus-within:border-sky-400 focus-within:ring-[3px] focus-within:ring-sky-400/20">
+              <Lock
+                className="ml-3 h-[17px] w-[17px] shrink-0 text-slate-400"
+                strokeWidth={1.8}
                 aria-hidden="true"
               />
               <input
@@ -127,48 +122,56 @@ export default function LoginForm({ accounts, from }) {
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 placeholder="Enter your password"
-                className="h-11 w-full rounded-lg border border-slate-300 bg-panel pl-9 pr-10 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-navy-400 focus:ring-2 focus:ring-navy-100"
+                className="w-full flex-1 bg-transparent px-2 py-[13px] text-[15px] text-white placeholder:text-slate-500 focus:outline-none"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword((value) => !value)}
                 aria-label={showPassword ? "Hide password" : "Show password"}
-                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-md p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
+                className="mr-2.5 flex items-center p-1 text-slate-400 transition hover:text-sky-300"
               >
                 {showPassword ? (
-                  <EyeOff className="h-4 w-4" aria-hidden="true" />
+                  <EyeOff className="h-[17px] w-[17px]" strokeWidth={1.8} aria-hidden="true" />
                 ) : (
-                  <Eye className="h-4 w-4" aria-hidden="true" />
+                  <Eye className="h-[17px] w-[17px]" strokeWidth={1.8} aria-hidden="true" />
                 )}
               </button>
             </div>
           </div>
 
-          <label className="flex cursor-pointer items-center gap-2.5 text-[13px] text-slate-600">
-            <input
-              type="checkbox"
-              checked={remember}
-              onChange={(event) => setRemember(event.target.checked)}
-              className="h-4 w-4 rounded border-slate-300 bg-white accent-[#244674]"
-            />
-            Keep me signed in on this device
-          </label>
-
           {error ? (
             <p
               role="alert"
-              className="anim-fade-in flex items-start gap-2 rounded-lg border border-rose-100 bg-rose-50 px-3.5 py-2.5 text-[13px] font-medium text-rose-700"
+              className="anim-fade-in flex items-start gap-2 rounded-lg border border-red-400/30 bg-red-500/10 px-3.5 py-2.5 text-[13px] font-medium text-red-300"
             >
               <CircleAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
               {error}
             </p>
           ) : null}
 
-          <Button
+          <div className="flex items-center justify-between pt-1 text-sm">
+            <label className="flex cursor-pointer items-center gap-2 text-slate-300">
+              <input
+                type="checkbox"
+                checked={remember}
+                onChange={(event) => setRemember(event.target.checked)}
+                className="h-[15px] w-[15px] cursor-pointer rounded border-sky-300/40 bg-transparent text-sky-400 focus:ring-sky-400"
+              />
+              Remember me
+            </label>
+            <button
+              type="button"
+              onClick={() => setForgotOpen(true)}
+              className="font-medium text-sky-300 transition hover:underline"
+            >
+              Forgot password?
+            </button>
+          </div>
+
+          <button
             type="submit"
-            size="lg"
-            className="w-full"
             disabled={submitting}
+            className="flex w-full items-center justify-center gap-2 rounded-[11px] bg-gradient-to-r from-sky-600 via-sky-400 to-sky-300 py-[14.5px] text-[15px] font-bold text-[#04121f] shadow-[0_12px_28px_-10px_rgba(51,182,255,0.55)] transition-transform hover:brightness-[1.06] active:translate-y-0 disabled:opacity-60"
           >
             {submitting ? (
               <>
@@ -177,31 +180,35 @@ export default function LoginForm({ accounts, from }) {
               </>
             ) : (
               <>
-                <LogIn className="h-4 w-4" aria-hidden="true" />
-                Login
+                Sign In <ArrowRight className="h-[17px] w-[17px]" strokeWidth={2.2} aria-hidden="true" />
               </>
             )}
-          </Button>
+          </button>
         </form>
 
-        <div className="mt-6 rounded-lg border border-dashed border-slate-300/80 bg-white/70 p-4 backdrop-blur">
-          <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">
-            Demo access
-          </p>
-          <ul className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1.5">
-            {accounts.map((account) => (
-              <li key={account.username} className="text-[12.5px] text-slate-600">
-                <span className="font-mono font-semibold text-navy-700">
-                  {account.username}
-                </span>
-                <span className="text-slate-400"> · {account.role}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-2.5 text-[12px] text-slate-500">
-            Password for all demo accounts:{" "}
-            <span className="font-mono font-semibold text-navy-700">demo@123</span>
-          </p>
+        <div className="my-6 flex items-center gap-3.5 text-xs text-slate-400">
+          <div className="h-px flex-1 bg-sky-300/20" />
+          or
+          <div className="h-px flex-1 bg-sky-300/20" />
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setForgotOpen(true)}
+          className="flex w-full items-center justify-center gap-2 rounded-[11px] border border-sky-300/25 bg-white/[0.02] py-[13px] text-sm font-semibold text-white transition-colors hover:border-sky-500 hover:bg-sky-400/[0.08]"
+        >
+          <KeyRound className="h-4 w-4 text-sky-300" strokeWidth={1.8} aria-hidden="true" />
+          Contact Helpdesk
+        </button>
+
+        <div className="mt-[22px] flex items-start gap-3 rounded-xl border border-sky-400/20 bg-sky-400/[0.06] p-4">
+          <ShieldCheck className="mt-0.5 h-[19px] w-[19px] shrink-0 text-sky-300" strokeWidth={1.8} aria-hidden="true" />
+          <div>
+            <p className="text-sm font-semibold text-white">Secure Login</p>
+            <p className="mt-0.5 text-xs leading-relaxed text-slate-400">
+              Your data is protected with enterprise-grade security.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -232,13 +239,16 @@ export default function LoginForm({ accounts, from }) {
             </div>
           </dl>
           <div className="mt-5 flex justify-end">
-            <Button variant="secondary" onClick={() => setForgotOpen(false)}>
+            <button
+              type="button"
+              onClick={() => setForgotOpen(false)}
+              className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+            >
               Close
-            </Button>
+            </button>
           </div>
         </div>
       </Dialog>
     </>
   );
 }
-
