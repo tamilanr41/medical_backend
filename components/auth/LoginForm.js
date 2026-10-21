@@ -57,7 +57,7 @@ export default function LoginForm({ accounts, from }) {
 
   return (
     <>
-      <div className="anim-fade-up rounded-2xl border border-slate-200 bg-panel p-6 shadow-[0_24px_60px_-40px_rgba(16,31,53,0.5)] sm:p-8">
+      <div className="anim-fade-up rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_24px_60px_-40px_rgba(16,31,53,0.5)] sm:p-8">
         <header>
           <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-navy-500">
             Secure sign in
@@ -92,7 +92,7 @@ export default function LoginForm({ accounts, from }) {
                 value={username}
                 onChange={(event) => setUsername(event.target.value)}
                 placeholder="e.g. admin"
-                className="h-11 w-full rounded-lg border border-slate-300 bg-panel pl-9 pr-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-navy-400 focus:ring-2 focus:ring-navy-100"
+                className="h-11 w-full rounded-lg border border-slate-300 bg-white pl-9 pr-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-navy-400 focus:ring-2 focus:ring-navy-100"
               />
             </div>
           </div>

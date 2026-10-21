@@ -130,7 +130,7 @@ export default async function LoginPage({ searchParams }) {
 
           <LoginForm accounts={accounts} from={from} />
 
-          <p className="mt-8 text-center text-[12px] leading-relaxed text-white/55">
+          <p className="mt-8 text-center text-[12px] leading-relaxed text-white/55" suppressHydrationWarning>
             © {new Date().getFullYear()} {HOSPITAL.name} · {HOSPITAL.systemName}
             <br />
             Authorized personnel only. All access is logged and audited.
